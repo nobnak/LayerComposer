@@ -20,12 +20,6 @@ namespace LayerComposer {
 			if (depth <= 0f)
 				depth = srcCamera.nearClipPlane;
 
-			var viewport = srcCamera.rect;
-			var size = srcCamera.ViewportToWorldPoint(new Vector3(viewport.width, viewport.height, depth))
-				- srcCamera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
-			size.z = 1f;
-			transform.localScale = size;
-
 			_capture = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32);
 			_capture.antiAliasing = (QualitySettings.antiAliasing == 0 ? 1 : QualitySettings.antiAliasing);
 			_capture.filterMode = FilterMode.Bilinear;
@@ -33,7 +27,13 @@ namespace LayerComposer {
 			_props = new MaterialPropertyBlock();
 			_props.SetTexture(PROP_MAIN_TEXTURE, _capture);
 			GetComponent<Renderer>().SetPropertyBlock(_props);
+
 			srcCamera.targetTexture = _capture;
+			var viewport = srcCamera.rect;
+			var size = srcCamera.ViewportToWorldPoint(new Vector3(viewport.width, viewport.height, depth))
+				- srcCamera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
+			size.z = 1f;
+			transform.localScale = size;
 		}
 		void OnDestroy() {
 			if (_capture != null) {
