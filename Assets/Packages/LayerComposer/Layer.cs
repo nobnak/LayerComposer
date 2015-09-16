@@ -27,7 +27,7 @@ namespace LayerComposer {
 			transform.localScale = size;
 
 			_capture = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32);
-			_capture.antiAliasing = QualitySettings.antiAliasing;
+			_capture.antiAliasing = (QualitySettings.antiAliasing == 0 ? 1 : QualitySettings.antiAliasing);
 			_capture.filterMode = FilterMode.Bilinear;
 			_capture.wrapMode = TextureWrapMode.Clamp;
 			_props = new MaterialPropertyBlock();
