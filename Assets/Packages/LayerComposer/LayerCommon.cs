@@ -6,5 +6,7 @@ namespace LayerComposer {
 		public enum BlendModeEnum { AlphaBlend = 0, Additive, AdditiveAlpha }
 		
 		public Material[] BlendMaterials;
+		public Layer layerfab;
+		public float layerSpace;
 	}
 }

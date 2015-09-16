@@ -5,8 +5,6 @@ namespace LayerComposer {
 	public class LayerComposer : MonoBehaviour {
 		public int width;
 		public int height;
-		public Layer layerfab;
-		public float layerSpace = 10f;
 		public LayerData[] layerData;
 		public LayerCommon common;
 
@@ -30,12 +28,13 @@ namespace LayerComposer {
 			public LayerCommon.BlendModeEnum blendMode;
 
 			public Layer Create(LayerComposer composer, int i) {
-				var pos = new Vector3(0f, 0f, i * composer.layerSpace);
-				var layer = (Layer)Instantiate(composer.layerfab, pos, Quaternion.identity);
+				var common = composer.common;
+				var pos = new Vector3(0f, 0f, i * common.layerSpace);
+				var layer = (Layer)Instantiate(common.layerfab, pos, Quaternion.identity);
 				layer.width = composer.width;
 				layer.height = composer.height;
 				layer.srcCamera = camera;
-				layer.GetComponent<Renderer>().sharedMaterial = composer.common.BlendMaterials[(int)blendMode];
+				layer.GetComponent<Renderer>().sharedMaterial = common.BlendMaterials[(int)blendMode];
 				layer.transform.SetParent(composer.transform, false);
 				return layer;
 			}
